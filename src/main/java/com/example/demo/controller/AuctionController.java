@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,29 +38,31 @@ public class AuctionController {
 	 * @param pageSize
 	 * @return
 	 */
-	@GetMapping("/Auction/finish/{pageNum}/{pageSize}")
-	public PageInfo<Auction> findAuctions(@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-		return auctionBiz.findAuctions(pageNum, pageSize);
+	@GetMapping("/{pageNum}/{pageSize}/{name}/{desc}/{startime}/{endTime}/{price}")
+	public PageInfo<Auction> findAuctions(@PathVariable Integer pageNum,@PathVariable Integer pageSize, @PathVariable String name,@PathVariable String desc,
+			@PathVariable Date startime,@PathVariable Date endTime ,@PathVariable Integer price){
+		return auctionBiz.findAuctions(pageNum, pageSize, name, desc, startime, endTime, price);
 	}
 	/**
 	 * 查看最新上架的商品
 	 * 
 	 */
-	@GetMapping("/Auction/UpperShelf/{pageNum}/{pageSize}")
-	public PageInfo<Auction> findAuctionsUpperShelf(@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-		return auctionBiz.findAuctions(pageNum, pageSize);
-	}
+//	@GetMapping("/Auction/UpperShelf/{pageNum}/{pageSize}")
+//	public PageInfo<Auction> findAuctionsUpperShelf(@PathVariable Integer pageNum,@PathVariable Integer pageSize){
+//		return auctionBiz.findAuctions(pageNum, pageSize);
+//	}
 	
 	@PostMapping("/Auction")
 	public Map<String, String> insertActions(@RequestBody Auction auction){
-		Map<String, String> message = new HashMap<String, String>();	
+		Map<String, String> message = new HashMap<String, String>();
+		System.out.println(auction);
 		if (auctionBiz.insertAuctions(auction) >0) {
 			message.put("code", "200");
 			message.put("msg", "新增成功");
 		} else {
 			message.put("code", "300");
 			message.put("msg", "新增失败");
-		}
+		}	
 		return message ;
 	}
 	
