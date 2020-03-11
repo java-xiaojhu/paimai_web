@@ -23,19 +23,24 @@ public class AuctionBiz {
 	@Resource
 	private IAuctionDao iAuctionDao;
 	
-	public PageInfo<Auction> findAuctions(Integer pageNum,Integer pageSize, String name, String desc,Date startime, Date endTime,Integer price){
+	public PageInfo<Auction> findAuctions(Integer pageNum,Integer pageSize, String name, String desc,String startime, String endTime,Integer price){
 		QueryWrapper<Auction>  qw = Wrappers.query();
-		qw.like("auctionName", name).like("auctionDesc", desc);
-		if(endTime.equals(null)) {
+		if(!name.equals("null")) {
+			qw.like("auctionName", name);
+		}
+		if(!desc.equals("null")) {
+			qw.like("auctionDesc", desc);
+		}
+		if(endTime.equals("null") && !endTime.equals("null")) {
 			qw.lt("auctionEndTime", endTime);
-		}
-		if(startime.equals(null)) {
+		}else if(!startime.equals("null") && endTime.equals("null")) {
 			qw.gt("auctionStartTime", startime);
-		}
-		if(!(startime.equals(null)  && endTime.equals(null))) {
+		}else if(!(startime.equals("null")  && endTime.equals("null"))) {
 			qw.gt("auctionStartTime", startime).lt("auctionEndTime", endTime);
 		}
-		qw.eq("auctionStartPrice", price);
+		if(price!=0) {
+			qw.eq("auctionStartPrice", price);
+		}
 		qw.orderByDesc("auctionId");
 		PageHelper.startPage(pageNum, pageSize);
 		return new PageInfo<Auction>(iAuctionDao.selectList(qw));

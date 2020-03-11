@@ -40,8 +40,9 @@ public class AuctionController {
 	 */
 	@GetMapping("/{pageNum}/{pageSize}/{name}/{desc}/{startime}/{endTime}/{price}")
 	public PageInfo<Auction> findAuctions(@PathVariable Integer pageNum,@PathVariable Integer pageSize, @PathVariable String name,@PathVariable String desc,
-			@PathVariable Date startime,@PathVariable Date endTime ,@PathVariable Integer price){
+			@PathVariable String startime,@PathVariable String endTime ,@PathVariable Integer price){
 		return auctionBiz.findAuctions(pageNum, pageSize, name, desc, startime, endTime, price);
+	
 	}
 	/**
 	 * 查看最新上架的商品
