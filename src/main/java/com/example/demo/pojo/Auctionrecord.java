@@ -12,11 +12,24 @@ public class Auctionrecord {
 	// 竞拍者编号
 	private Integer userId;
 	// 拍卖品编号
-	private Integer auctionId;
+	private Integer auctionid;
 	// 竞价时间
-	private String auctionTime;
+	private String auctiontime;
 	// 竞拍价格
-	private Double auctionPrice;
+	private Double auctionprice;
+	
+	public Auctionrecord(Integer id, Integer userId, Integer auctionid, String auctiontime, Double auctionprice) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.auctionid = auctionid;
+		this.auctiontime = auctiontime;
+		this.auctionprice = auctionprice;
+	}
+
+	public Auctionrecord() {
+		super();
+	}
 
 	public Integer getId() {
 		return id;
@@ -34,47 +47,37 @@ public class Auctionrecord {
 		this.userId = userId;
 	}
 
-	public Integer getAuctionId() {
-		return auctionId;
+	public Integer getAuctionid() {
+		return auctionid;
 	}
 
-	public void setAuctionId(Integer auctionId) {
-		this.auctionId = auctionId;
+	public void setAuctionid(Integer auctionid) {
+		this.auctionid = auctionid;
 	}
 
-	public String getAuctionTime() {
-		return auctionTime;
+	public String getAuctiontime() {
+		return auctiontime;
 	}
 
-	public void setAuctionTime(String auctionTime) {
-		this.auctionTime = auctionTime;
+	public void setAuctiontime(String auctiontime) {
+		this.auctiontime = auctiontime;
 	}
 
-	public Double getAuctionPrice() {
-		return auctionPrice;
+	public Double getAuctionprice() {
+		return auctionprice;
 	}
 
-	public void setAuctionPrice(Double auctionPrice) {
-		this.auctionPrice = auctionPrice;
-	}
-
-	public Auctionrecord(Integer id, Integer userId, Integer auctionId, String auctionTime, Double auctionPrice) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.auctionId = auctionId;
-		this.auctionTime = auctionTime;
-		this.auctionPrice = auctionPrice;
-	}
-
-	public Auctionrecord() {
-		super();
+	public void setAuctionprice(Double auctionprice) {
+		this.auctionprice = auctionprice;
 	}
 
 	@Override
 	public String toString() {
-		return "Auctionrecord [id=" + id + ", userId=" + userId + ", auctionId=" + auctionId + ", auctionTime="
-				+ auctionTime + ", auctionPrice=" + auctionPrice + "]";
+		return "Auctionrecord [id=" + id + ", userId=" + userId + ", auctionid=" + auctionid + ", auctiontime="
+				+ auctiontime + ", auctionprice=" + auctionprice + "]";
 	}
+	
+	
 
+	
 }
