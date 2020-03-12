@@ -1,6 +1,7 @@
 package com.example.demo.biz;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -22,40 +23,45 @@ import com.github.pagehelper.PageInfo;
 public class AuctionBiz {
 	@Resource
 	private IAuctionDao iAuctionDao;
-	
-	public PageInfo<Auction> findAuctions(Integer pageNum,Integer pageSize, String name, String desc,String startime, String endTime,Integer price){
-		QueryWrapper<Auction>  qw = Wrappers.query();
-		if(!name.equals("null")) {
+
+	public PageInfo<Auction> findAuctions(Integer pageNum, Integer pageSize, String name, String desc, String startime,
+			String endTime, Integer price) {
+		QueryWrapper<Auction> qw = Wrappers.query();
+		if (!name.equals("null")) {
 			qw.like("auctionName", name);
 		}
-		if(!desc.equals("null")) {
+		if (!desc.equals("null")) {
 			qw.like("auctionDesc", desc);
 		}
-		if(endTime.equals("null") && !endTime.equals("null")) {
+		if (endTime.equals("null") && !endTime.equals("null")) {
 			qw.lt("auctionEndTime", endTime);
-		}else if(!startime.equals("null") && endTime.equals("null")) {
+		} else if (!startime.equals("null") && endTime.equals("null")) {
 			qw.gt("auctionStartTime", startime);
-		}else if(!(startime.equals("null")  && endTime.equals("null"))) {
+		} else if (!(startime.equals("null") && endTime.equals("null"))) {
 			qw.gt("auctionStartTime", startime).lt("auctionEndTime", endTime);
 		}
-		if(price!=0) {
+		if (price != 0) {
 			qw.eq("auctionStartPrice", price);
 		}
 		qw.orderByDesc("auctionId");
 		PageHelper.startPage(pageNum, pageSize);
 		return new PageInfo<Auction>(iAuctionDao.selectList(qw));
 	}
+
 	/**
 	 * 新增拍卖品
+	 * 
 	 * @param auction
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
-	public Integer insertAuctions(Auction auction){
+	public Integer insertAuctions(Auction auction) {
 		return iAuctionDao.insert(auction);
 	}
+
 	/**
 	 * 修改拍卖品
+	 * 
 	 * @param auction
 	 * @return
 	 */
@@ -63,14 +69,28 @@ public class AuctionBiz {
 	public Integer modifyAuctionByAuctionId(Auction auction) {
 		return iAuctionDao.updateById(auction);
 	}
-	
+
 	/**
 	 * 修改拍卖品上下架
+	 * 
 	 * @param auction
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public Integer removeAuctionByAuctionId(String auctionId) {
 		return iAuctionDao.deleteById(auctionId);
+	}
+	/**
+	 * 查询最新上架得拍卖品
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public List<Auction> findUpAuctions(Integer pageNum, Integer pageSize,Integer isup) {
+		QueryWrapper<Auction> qw = Wrappers.query();
+		qw.eq("isup", isup);
+		qw.orderByDesc("auctionId");
+		PageHelper.startPage(pageNum, pageSize);
+		return iAuctionDao.selectList(qw);
 	}
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,6 +47,36 @@ public class AuctionuserController {
 		session.invalidate();// 会话销毁
 		message.put("code", "200");
 		message.put("dizhi", "竞拍首页.html");
+		return message;
+	}
+	
+	@PostMapping("/res/Auctionuser")
+	public Map<String, String> userRes(@RequestBody Auctionuser auctionuser ,HttpSession ssession) {
+		Map<String, String> message = new HashMap<String, String>();
+		if (auctionuserBiz.insertUser(auctionuser) >0) {
+			ssession.setAttribute("user", auctionuser);
+			message.put("code", "200");
+			message.put("user", JSON.toJSONString(auctionuser));
+			message.put("msg", "注册成功");
+			message.put("dizhi", "竞拍首页.html");
+		} else {
+			message.put("code", "300");
+			message.put("msg", "注册失败");
+		}
+		return message;
+	}
+	
+	@GetMapping("/{name}")
+	public Map<String, String> checkUserName(@PathVariable String name) {
+		Map<String, String> message = new HashMap<String, String>();
+		Auctionuser user = auctionuserBiz.findUserByname(name);
+		if (user == null) {
+			message.put("code", "200");
+			message.put("msg", "用户名可用");
+		} else {
+			message.put("code", "300");
+			message.put("msg", "用户名不可用");
+		}
 		return message;
 	}
 

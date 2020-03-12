@@ -48,10 +48,10 @@ public class AuctionController {
 	 * 查看最新上架的商品
 	 * 
 	 */
-//	@GetMapping("/Auction/UpperShelf/{pageNum}/{pageSize}")
-//	public PageInfo<Auction> findAuctionsUpperShelf(@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-//		return auctionBiz.findAuctions(pageNum, pageSize);
-//	}
+	@GetMapping("/Auction/UpperShelf/{pageNum}/{pageSize}/{isup}")
+	public List<Auction> findAuctionsUpperShelf(@PathVariable Integer pageNum,@PathVariable Integer pageSize,@PathVariable Integer isup){
+		return auctionBiz.findUpAuctions(pageNum, pageSize,isup);
+	}
 	
 	@PostMapping("/Auction")
 	public Map<String, String> insertActions(@RequestBody Auction auction){

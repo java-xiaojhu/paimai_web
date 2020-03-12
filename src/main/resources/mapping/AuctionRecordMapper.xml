@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.IAuctionRecordDao">
+	<select id="selectList" resultType="AuctionRecordVo">
+		SELECT
+		auction.`auctionId`,`auctionStartTime`,`auctionEndTime`,`auctionStartPrice`,
+		`auctionName`,MAX(`auctionPrice`) AS auctionPrice FROM `auctionrecord`
+		INNER JOIN `auction` ON auction.`auctionId`=auctionrecord.`auctionId`
+		INNER JOIN `auctionuser` ON
+		auctionrecord.`userId`=auctionuser.`userId`
+		 ORDER BY auctionEndTime DESC
+	</select>
+
+
+</mapper>
