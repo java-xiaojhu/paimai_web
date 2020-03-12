@@ -6,12 +6,28 @@
 	<select id="selectList" resultType="AuctionRecordVo">
 		SELECT
 		auction.`auctionId`,`auctionStartTime`,`auctionEndTime`,`auctionStartPrice`,
-		`auctionName`,MAX(`auctionPrice`) AS auctionPrice FROM `auctionrecord`
+		`auctionName`,MAX(`auctionPrice`) AS auctionPrice ,username FROM
+		`auctionrecord`
+		INNER JOIN `auction` ON
+		auction.`auctionId`=auctionrecord.`auctionId`
+		INNER JOIN `auctionuser`
+		ON
+		auctionrecord.`userId`=auctionuser.`userId`
+		ORDER BY auctionEndTime DESC
+	</select>
+
+	<select id="selectByList" resultType="AuctionRecordVo">
+		SELECT * from auctionrecord
 		INNER JOIN `auction` ON auction.`auctionId`=auctionrecord.`auctionId`
 		INNER JOIN `auctionuser` ON
 		auctionrecord.`userId`=auctionuser.`userId`
-		 ORDER BY auctionEndTime DESC
+		where
+		auctionrecord.auctionId=#{auctionId}
+
+		ORDER BY auctionPrice DESC
 	</select>
+
+
 
 
 </mapper>

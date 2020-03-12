@@ -39,11 +39,11 @@ public class Auctionrecord {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
+	public Integer getuserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setuserId(Integer userId) {
 		this.userId = userId;
 	}
 
